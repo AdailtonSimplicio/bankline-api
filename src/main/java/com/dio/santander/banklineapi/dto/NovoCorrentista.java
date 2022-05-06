@@ -1,6 +1,6 @@
 package com.dio.santander.banklineapi.dto;
 
-public class CorrentistaDto{
+public class NovoCorrentista {
     private String nome;
     private String cpf;
 
