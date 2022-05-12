@@ -29,6 +29,9 @@ public class MovimentacaoController {
     @PostMapping
     public void save(@RequestBody NovaMovimentacao movimentacao){
         service.save(movimentacao);
-
+    }
+    @GetMapping("/{idConta}")
+    public List<Movimentacao> findAll(@PathVariable("idConta") Integer idConta){
+        return repository.findByIdConta(idConta);
     }
 }
