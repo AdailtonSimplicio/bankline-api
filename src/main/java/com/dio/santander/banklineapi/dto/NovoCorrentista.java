@@ -9,14 +9,17 @@ public class NovoCorrentista {
     }
 
     public void setNome(String nome) {
+
         this.nome = nome;
     }
 
     public String getCpf() {
+
         return cpf;
     }
 
     public void setCpf(String cpf) {
+
         this.cpf = cpf;
     }
 }

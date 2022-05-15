@@ -5,36 +5,39 @@ import com.dio.santander.banklineapi.model.Correntista;
 import com.dio.santander.banklineapi.model.Movimentacao;
 import com.dio.santander.banklineapi.model.TipoMovimetacao;
 import com.dio.santander.banklineapi.repository.CorrentistaRepository;
-import com.dio.santander.banklineapi.repository.MovimentacaoRepositry;
+import com.dio.santander.banklineapi.repository.MovimentacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class MovimentacaoService {
+    //injeção de dependência
     @Autowired
-    private MovimentacaoRepositry repositry;
+    private MovimentacaoRepository movimentacaoRepository;
     @Autowired
     private CorrentistaRepository correntistaRepository;
     public void save(NovaMovimentacao novaMovimentacao){
         Movimentacao movimentacao = new Movimentacao();
 
-        Double valor = novaMovimentacao.getValor();
-        if(novaMovimentacao.getTipo() == TipoMovimetacao.DESPESA)
-            valor = valor * -1;
+        Double valor = novaMovimentacao.getTipo() == TipoMovimetacao.RECEITA ? novaMovimentacao.getValor()
+                : novaMovimentacao.getValor() * -1;
 
         movimentacao.setDataHora(LocalDateTime.now());
         movimentacao.setDescricao(novaMovimentacao.getDescricao());
-        movimentacao.setId_conta(novaMovimentacao.getId_conta());
+        movimentacao.setIdConta(novaMovimentacao.getIdConta());
         movimentacao.setTipo(novaMovimentacao.getTipo());
-        movimentacao.setValor(novaMovimentacao.getValor());
+        movimentacao.setValor(valor);
 
-        Correntista correntista = correntistaRepository.findById(novaMovimentacao.getId_conta()).orElse(null);
-        if (correntista != null){
+        Correntista correntista = correntistaRepository.findById(novaMovimentacao.getIdConta()).orElse(null);
+        if (correntista !=null){
             correntista.getConta().setSaldo(correntista.getConta().getSaldo() + valor);
             correntistaRepository.save(correntista);
         }
-        repositry.save(movimentacao);
-    }
-}
+        movimentacaoRepository.save(movimentacao);
+
+
+
+}}

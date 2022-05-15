@@ -3,7 +3,6 @@ package com.dio.santander.banklineapi.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "tab_movimentacao")
@@ -17,8 +16,10 @@ public class Movimentacao {
     private Double valor;
     @Enumerated(EnumType.STRING)
     private TipoMovimetacao tipo;
-    @Column( name = "id_conta")
-    private Integer id_conta;
+    @Column(name = "id_conta")
+    private Integer idConta;
+
+    //Gets e Sets
 
     public Integer getId() {
         return id;
@@ -60,11 +61,11 @@ public class Movimentacao {
         this.tipo = tipo;
     }
 
-    public Integer getId_conta() {
-        return id_conta;
+    public Integer getIdConta() {
+        return idConta;
     }
 
-    public void setId_conta(Integer id_conta) {
-        this.id_conta = id_conta;
+    public void setIdConta(Integer idConta) {
+        this.idConta = idConta;
     }
 }
